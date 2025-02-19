@@ -7,13 +7,13 @@ Feature:Order Product
     Given the user has browsed to the homepage
     When the user clicks on "computers"
     Then the "/computers" page is displayed
-    When the user clicks on "desktops"
+    And the user clicks on "desktops"
     Then the "/desktops" page is displayed
 
   Scenario:Successful Ordering a camera from the Electronics category
     Given the user has browsed to the homepage
     When the user clicks on "electronics"
     Then the "/electronics" page is displayed
-    When the user clicks on "camera-photo"
+    And the user clicks on "camera-photo"
     Then the "/camera-photo" page is displayed
 
