@@ -5,8 +5,8 @@ exports.config = {
       url: "https://www.kilimall.co.ke",
       show: true,
       windowSize: "1200x900",
-      /* waitForNavigation: ["load", "domcontentloaded", "networkidle0"]
-      waitForTimeout: 10000, */
+      waitForNavigation: ["load", "domcontentloaded", "networkidle0"],
+      waitForTimeout: 10000,
     },
   },
   include: {
