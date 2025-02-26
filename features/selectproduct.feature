@@ -6,5 +6,5 @@ Feature:Select Product
   Scenario:Successful Selecting any product as a consumer
     Given the user has browsed to the homepage
     And the user clicks on any random productCard
-    
+    Then the user is redirected to the productdetailpage
     
