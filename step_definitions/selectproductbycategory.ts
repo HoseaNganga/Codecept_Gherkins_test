@@ -26,6 +26,7 @@ Then("the user selects a random category", async () => {
 
     I.waitForElement(categoryLocator, 25);
     I.click(categoryLocator);
+    I.waitForNavigation({ wait: "load" });
   } else {
     throw new Error("No categories available to select.");
   }
@@ -73,14 +74,24 @@ Then("the user clicks on any random productCard", async () => {
 
     I.click(productLocator);
     I.wait(2);
-    I.switchToNextTab();
+    const openTabs = await I.grabNumberOfOpenTabs();
+    console.log(`Tabs open One: ${openTabs}`);
+    const tabs = await I.grabNumberOfOpenTabs();
+
+    if (tabs > 1) {
+      console.log(`Tabs open: ${tabs}`);
+      I.switchToNextTab();
+      I.wait(3);
+    } else {
+      throw new Error("New tab did not open for product details page.");
+    }
   } else {
     throw new Error("No products found on the page");
   }
 });
 
 Then("the user is redirected to the productdetailpage", async () => {
-  I.waitForNavigation({ wait: "load" });
+  I.wait(30);
 
   const currentUrl = await I.grabCurrentUrl();
   if (!currentUrl.includes("/listing")) {
