@@ -33,15 +33,25 @@ Then("the user clicks on any random productCard", async () => {
     }, productLocator);
 
     I.click(productLocator);
-    I.wait(2);
-    I.switchToNextTab();
+    I.wait(10);
+    const openTabs = await I.grabNumberOfOpenTabs();
+    console.log(`Tabs open One: ${openTabs}`);
+    const tabs = await I.grabNumberOfOpenTabs();
+
+    if (tabs > 1) {
+      console.log(`Tabs open: ${tabs}`);
+      I.switchToNextTab();
+      I.wait(3);
+    } else {
+      throw new Error("New tab did not open for product details page.");
+    }
   } else {
     throw new Error("No products found on the page");
   }
 });
 
 Then("the user is redirected to the productdetailpage", async () => {
-  I.waitForNavigation({ wait: "load" });
+  I.wait(30);
 
   const currentUrl = await I.grabCurrentUrl();
   if (!currentUrl.includes("/listing")) {
@@ -49,4 +59,18 @@ Then("the user is redirected to the productdetailpage", async () => {
       `Expected URL to contain '/listing', but got ${currentUrl}`
     );
   }
+});
+
+Then("the user adds a product to the cart", async () => {
+  I.waitForElement(".van-stepper", 10);
+  I.waitForElement(".van-stepper__plus", 10);
+  I.click(".van-stepper__plus");
+  I.wait(3);
+  I.waitForElement(".opt-btn.yellow-btn", 5);
+  I.click(".opt-btn.yellow-btn");
+});
+
+Then("the user is redirected to the cartpage", async () => {
+  I.wait(15);
+  I.seeInCurrentUrl("/login");
 });
